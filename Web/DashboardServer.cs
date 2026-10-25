@@ -350,6 +350,28 @@ public class DashboardServer
             return Results.Ok(new { status = "today_reset" });
         });
 
+
+        app.MapGet("/api/screen-time/status", () =>
+        {
+            try
+            {
+                using var service = new System.ServiceProcess.ServiceController("GameHost");
+                if (service.Status != System.ServiceProcess.ServiceControllerStatus.Running)
+                    return Results.Ok(new { available = false, error = "Servico GameHost parado. Controle de tela indisponivel." });
+                var path = MonitorAndControl.ScreenTime.ScreenTimeFiles.StatusPath;
+                if (!File.Exists(path))
+                    return Results.Ok(new { available = false, error = "Modulo de tela sem status. Atualize o GameHost ou consulte o log do servico." });
+                using var status = JsonDocument.Parse(File.ReadAllText(path));
+                return Results.Ok(new { available = true, status = status.RootElement.Clone() });
+            }
+            catch (Exception ex)
+            {
+                return Results.Ok(new { available = false, error = "Controle de tela indisponivel: " + ex.Message });
+            }
+        });
+
+        ScreenTimeEndpoints.Map(app);
+
         app.MapPost("/api/actions/block-all", (HttpContext ctx) =>
         {
             var auth = RequireWriteAccess(ctx);

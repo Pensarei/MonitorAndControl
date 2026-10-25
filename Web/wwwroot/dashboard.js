@@ -1,4 +1,4 @@
-﻿// State
+// State
 let todayChart = null;
 let historyChart = null;
 let editingLimit = null;
@@ -156,7 +156,7 @@ function escAttr(s) { return s.replace(/'/g, "\\'").replace(/"/g, "&quot;"); }
 function log(e) { console.error(e); document.getElementById('error-bar').classList.remove('hidden'); document.getElementById('error-bar').textContent = e.message || e; setTimeout(() => document.getElementById('error-bar').classList.add('hidden'), 8000); }
 
 // Navigation
-document.querySelectorAll('.sidebar nav a').forEach(a => {
+document.querySelectorAll('.sidebar nav a[data-view]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
     document.querySelectorAll('.sidebar nav a').forEach(x => x.classList.remove('active'));
@@ -170,6 +170,8 @@ document.querySelectorAll('.sidebar nav a').forEach(a => {
     if (a.dataset.view === 'schedule') loadSchedule();
     if (a.dataset.view === 'logs') loadLogs();
     if (a.dataset.view === 'settings') loadSettings();
+    if (a.dataset.view === 'screen-time') loadScreenTime();
+    history.replaceState(null, '', location.pathname + location.search + (a.dataset.view === 'screen-time' ? '#screen-time' : ''));
   });
 });
 

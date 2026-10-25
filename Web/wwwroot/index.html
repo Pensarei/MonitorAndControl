@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monitor & Control</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=1.7.3">
 <script src="chart.umd.min.js"></script>
 </head>
 <body>
@@ -12,10 +12,12 @@
   <aside class="sidebar">
     <div class="logo"><span>Monitor</span> &amp; Control<small>Family safety console</small></div>
     <nav>
+
       <a href="#" data-view="live" class="active">Live</a>
       <a href="#" data-view="today">Today</a>
       <a href="#" data-view="history">History</a>
       <a href="#" data-view="limits">Limits</a>
+      <a href="#screen-time" data-view="screen-time">Tempo do PC <small class="feature-badge">NEW</small></a>
       <a href="#" data-view="discover">Discover</a>
       <a href="#" data-view="schedule">Schedule</a>
       <a href="#" data-view="logs">Logs</a>
@@ -29,6 +31,49 @@
   <main class="main">
     <div id="alert-bar" class="alert-bar hidden"></div>
     <div id="error-bar" class="error-bar hidden"></div>
+
+    <div id="view-screen-time" class="view">
+      <div class="page-heading">
+        <div><span class="eyebrow">Family safety console</span><h2>Tempo do PC <span class="feature-badge">NEW</span></h2>
+        <p>Uma cota diária para cada conta, em qualquer aplicativo.</p></div>
+        <button id="screen-refresh" class="btn-secondary" type="button">Atualizar contas</button>
+      </div>
+      <div id="screen-message" class="screen-notice" role="status" aria-live="polite">Consultando contas deste PC…</div>
+      <div class="history-stats screen-stats">
+        <div class="stat-card"><div class="label">Conta selecionada</div><div class="value" id="screen-account-name">—</div><div class="sub">Administradores ficam fora do controle</div></div>
+        <div class="stat-card"><div class="label">Usado hoje</div><div class="value" id="screen-used">—</div><div class="sub">Sessão ativa e desbloqueada</div></div>
+        <div class="stat-card"><div class="label">Tempo restante</div><div class="value" id="screen-remaining">—</div><div class="sub" id="screen-allowance">Selecione uma conta</div></div>
+        <div class="stat-card"><div class="label">Estado da regra</div><div class="value" id="screen-state">—</div><div class="sub">Somente a conta selecionada é afetada</div></div>
+      </div>
+      <form id="screen-form" class="settings-form screen-form">
+        <section class="settings-panel">
+          <h3>Conta e limite diário</h3>
+          <label for="screen-account">Conta do Windows</label><p class="screen-help">Somente contas habilitadas e sem permissão de administrador.</p>
+          <select id="screen-account" required><option value="">Carregando contas…</option></select>
+          <p class="screen-help" id="screen-account-help">As contas são identificadas de forma permanente, mesmo depois de renomeadas.</p>
+          <label for="screen-minutes">Minutos por dia</label>
+          <input type="number" id="screen-minutes" min="1" max="1440" value="180" required>
+          <p class="screen-help">180 minutos equivalem a 3 horas.</p>
+          <label><input type="checkbox" id="screen-enabled"> Ativar controle desta conta</label>
+          <label for="screen-bonus">Bônus total para hoje, em minutos</label>
+          <input type="number" id="screen-bonus" min="0" max="1440" value="0" required>
+          <p class="screen-help">O bônus vale só hoje. Salvar novamente não soma o mesmo bônus duas vezes.</p>
+          <div class="quick-actions"><button id="screen-save" type="submit">Salvar configurações</button></div>
+        </section>
+        <section class="settings-panel">
+          <h3>Como o tempo funciona</h3>
+          <p class="screen-help">A contagem continua com o painel fechado. Vídeos e jogos contam enquanto a sessão estiver ativa e desbloqueada.</p>
+          <p class="screen-help">Tela bloqueada, suspensão e tempo em outra conta não consomem esta cota. O limite renova na virada do dia.</p>
+          <div class="screen-warning">Quando o tempo terminar, esta sessão será encerrada e os programas serão fechados. Salve o trabalho antes do aviso final.</div>
+          <p class="screen-help">Uma nova entrada é encerrada novamente enquanto a cota estiver esgotada. Contas sem regra e administradores não são afetados.</p>
+          <details><summary>Identificação da conta</summary><p id="screen-account-sid" class="screen-help">—</p></details>
+        </section>
+      </form>
+      <section class="screen-summary"><h3>Regras deste PC</h3>
+        <div class="table-container"><table><thead><tr><th>Conta</th><th>Limite diário</th><th>Usado</th><th>Restante</th><th>Controle</th></tr></thead><tbody id="screen-profiles"></tbody></table></div>
+      </section>
+    </div>
+
     <div id="view-live" class="view active">
       <div class="page-heading">
         <div>
@@ -363,6 +408,17 @@
     </div>
   </main>
 </div>
-<script src="dashboard.js"></script>
+
+<dialog id="screen-auth" class="screen-auth" aria-labelledby="screen-auth-title">
+  <form id="screen-auth-form">
+    <h3 id="screen-auth-title">Confirmar alteração</h3>
+    <p id="screen-auth-summary" class="screen-help"></p>
+    <p class="screen-help">O Windows solicitará autorização administrativa para a conta selecionada. Se o administrador não tem senha, confirme o UAC.</p><p id="screen-auth-error" class="screen-auth-error" role="alert"></p>
+    <div class="quick-actions"><button type="submit" id="screen-auth-submit">Autorizar e salvar</button><button type="button" id="screen-auth-cancel" class="btn-secondary">Cancelar</button></div>
+  </form>
+</dialog>
+
+<script src="dashboard.js?v=1.7.3"></script>
+<script src="screen-time.js?v=1.7.3"></script>
 </body>
 </html>

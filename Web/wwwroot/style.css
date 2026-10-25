@@ -429,3 +429,22 @@ code { padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; ba
   .backup-actions { grid-template-columns: 1fr; }
   .backup-actions button { min-width: 0; }
 }
+
+/* Screen time follows the dashboard's existing card, table, form and navigation hierarchy. */
+.feature-badge { display: inline-flex; vertical-align: middle; margin-left: 8px; padding: 3px 7px; border: 1px solid color-mix(in srgb,var(--primary) 45%,transparent); border-radius: 4px; background: rgba(240,164,93,.12); color: var(--primary); font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+.sidebar nav a[data-view="screen-time"]::before { content: "◷"; }
+.screen-notice { margin: 0 0 20px; padding: 13px 16px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface-raised); color: var(--text-soft); font-size: 13px; }
+.screen-notice.screen-error, .screen-warning { border-color: rgba(240,164,93,.35); background: rgba(240,164,93,.06); }
+.screen-warning { margin: 18px 0; padding: 14px; border: 1px solid rgba(240,164,93,.35); border-radius: 6px; color: var(--text-soft); line-height: 1.6; font-size: 13px; }
+.screen-help { margin: 10px 0 14px; color: var(--muted); font-size: 13px; line-height: 1.65; overflow-wrap: anywhere; }
+.screen-form { margin-bottom: 28px; }
+.screen-form input[type="checkbox"] { width: auto; }
+.screen-form select { width: 100%; }
+.screen-form .quick-actions { margin-top: 20px; }
+.screen-summary h3 { margin: 24px 0 12px; }
+.screen-auth { width: min(480px,calc(100% - 32px)); margin: auto; padding: 26px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+.screen-auth::backdrop { background: rgba(0,0,0,.65); backdrop-filter: blur(4px); }
+.screen-auth label { display: block; margin: 16px 0 6px; color: var(--text-soft); font-size: 13px; }
+.screen-auth input { width: 100%; }
+.screen-auth .quick-actions { margin-top: 22px; }
+.screen-auth-error { margin-top: 12px; color: #e1807b; line-height: 1.5; font-size: 13px; }

@@ -21,3 +21,7 @@ Thumbs.db
 
 # Runtime
 *.log
+
+# Installer staging and output
+installer-work/
+dist/

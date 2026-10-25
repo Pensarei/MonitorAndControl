@@ -1,4 +1,15 @@
 # 🖥️ Monitor & Control
+
+## NEW — Per-account PC screen time (1.7.3, experimental)
+
+Screen time is now part of the existing dashboard navigation and visual hierarchy. Open **Tempo do PC — NEW** to list Windows accounts, select a standard account, set daily minutes, enable its rule and grant today's bonus. Saving uses native Windows administrative approval (UAC). The dashboard never requests the Windows password. An administrator without a password can confirm the UAC prompt according to Windows policy; standard users require administrator approval.
+
+The GameHost service validates authorization and stores protected, independent quotas per account. Other accounts are unaffected. Exhausting the quota logs off that account, closing applications and potentially losing unsaved work; subsequent logins are logged off again. App/group rules and DNS retain their current scope.
+
+**Screen-time counting, quota logoff and repeated logoff after re-entry were manually approved on a controlled account. Windows UAC, upgrade and uninstall acceptance checks remain pending.** No account is controlled by default.
+
+[Usage, security, limitations and test checklist](docs/TEMPO_PC_NEW.md)
+
 ### Free Parental Control App for Windows
 
 **Track. Limit. Protect.**  
@@ -527,3 +538,11 @@ Fair Use License — see the [LICENSE](LICENSE) file for details.
 - ✅ Free for personal, educational, and non‑commercial use
 - ✅ Modify and distribute with attribution
 - ❌ No selling, commercial redistribution, or republishing on app stores/public repositories
+
+
+## Fork planning documents
+
+- [PC setup guide (Português)](docs/ROTEIRO_CONFIGURACAO_PC.md)
+- [Per-account screen-time module specification (Português)](docs/CONTROLE_TEMPO_PC.md)
+
+The screen-time module is experimental and implemented in 1.7.3. Windows acceptance tests are pending. Existing app/group limits retain their current scope.
